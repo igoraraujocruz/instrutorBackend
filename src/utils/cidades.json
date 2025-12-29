@@ -1,0 +1,31 @@
+{
+  "am": {
+    "Canutama": {
+      "lat": -6.5330019,
+      "lng": -64.3834966,
+      "source": "nominatim"
+    }
+  },
+  "es": {
+    "Vitória": {
+      "lat": -20.3200917,
+      "lng": -40.3376682,
+      "source": "nominatim"
+    },
+    "São José do Calçado": {
+      "lat": -21.0271161,
+      "lng": -41.654069,
+      "source": "nominatim"
+    },
+    "Guarapari": {
+      "lat": -20.6718755,
+      "lng": -40.4984617,
+      "source": "nominatim"
+    },
+    "Colatina": {
+      "lat": -19.5346732,
+      "lng": -40.6287836,
+      "source": "nominatim"
+    }
+  }
+}
