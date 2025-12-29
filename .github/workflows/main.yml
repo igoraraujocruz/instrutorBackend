@@ -10,24 +10,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Checkout do código
       - name: Checkout do código
         uses: actions/checkout@v4
 
+      # 2️⃣ Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22.15.0'
           cache: 'yarn'
 
+      # 3️⃣ Instala dependências exatamente como no lockfile
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
+      # 4️⃣ Gera o Prisma Client (ESSENCIAL)
       - name: Generate Prisma Client
         run: npx prisma generate
 
+      # 5️⃣ Build do TypeScript
       - name: Build
         run: yarn build
 
+      # 6️⃣ Deploy do código (sem node_modules)
       - name: Deploy via SCP
         uses: appleboy/scp-action@master
         with:
@@ -35,9 +41,14 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
-          source: "., !node_modules"
+          source: |
+            .
+            !node_modules
+            !.git
+            !.github
           target: "~/instrutorBackend"
 
+      # 7️⃣ Pós-deploy no servidor
       - name: Update API
         uses: appleboy/ssh-action@master
         with:
@@ -47,6 +58,12 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/instrutorBackend
-            yarn install --production
+
+            # Instala apenas deps de produção
+            yarn install --production --frozen-lockfile
+
+            # Aplica migrations
             npx prisma migrate deploy
+
+            # Reinicia ou sobe a API
             pm2 restart server || pm2 start dist/index.js --name server
