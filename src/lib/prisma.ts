@@ -1,6 +1,6 @@
 // src/lib/prisma.ts
 import "dotenv/config";
-import { PrismaClient } from "../../prisma/generated/prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 
 const DATABASE_URL = `postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}` +

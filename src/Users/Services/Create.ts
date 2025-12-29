@@ -1,4 +1,4 @@
-import { Usuario } from "../../../prisma/generated/prisma/client";
+import { Usuario } from "@prisma/client";
 import { UserRepository } from "../UserRepository";
 
 export class Create {

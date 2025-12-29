@@ -26,7 +26,7 @@ export class UserController {
   }
 
   async get(req: Request, res: Response) {
-    const usuario = await this.userFind.execute(req.userId);
+    const usuario = await this.userFind.execute(req.userId!);
 
     return res.json(usuario);
   }
@@ -44,7 +44,7 @@ export class UserController {
 
    async updateAvatar(req: Request, res: Response) {
     const user = await this.userUpdateAvatar.execute({
-      userId: req.userId,
+      userId: req.userId!,
       file: req.file,
     });
 

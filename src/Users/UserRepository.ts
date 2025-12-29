@@ -1,31 +1,7 @@
-import { Usuario } from "../../prisma/generated/prisma/client";
 import { prisma } from "../lib/prisma";
 import { slugify } from '../utils/slugify'
+import { CreateProps, UserUpdate, Usuario } from "./interfaces";
 import { GeoService } from "./Services/GeoService";
-
-
-interface UserUpdate {
-  userId: string;
-  nome?: string;
-  telefone?: string;
-  cpf?: string;
-  email?: string;
-  estado?: string;
-  cidade?: string;
-  descricao?: string;
-  preco?: number;
-  slug?: string;
-  latitude?: number;
-  longitude?: number;
-}
-
-interface CreateProps {
-  nome: string,
-  provider: string,
-  providerId: string;
-  email?: string;
-  foto?: string;
-}
 
 
 export class UserRepository {

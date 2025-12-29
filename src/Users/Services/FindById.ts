@@ -1,4 +1,4 @@
-import { Usuario } from "../../../prisma/generated/prisma/client";
+import { Usuario } from "@prisma/client";
 import { AppError } from "../../utils/AppError";
 import { UserRepository } from "../UserRepository";
 

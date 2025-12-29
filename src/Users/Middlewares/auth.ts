@@ -1,16 +1,18 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import { AppError } from "../../utils/AppError";
 
+type AuthRequest = Request & { userId: string };
 
 export function authMiddleware(
   req: Request,
   res: Response,
   next: NextFunction
-) {
+): asserts req is AuthRequest {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
-    return res.status(401).json({ error: "Token ausente" });
+    throw new AppError("Token ausente", 401);
   }
 
   const [, token] = authHeader.split(" ");
@@ -22,8 +24,13 @@ export function authMiddleware(
     ) as { userId: string };
 
     req.userId = decoded.userId;
+
+    if (!req.userId) {
+      throw new AppError("Token inválido", 401);
+    }
+
     next();
   } catch {
-    return res.status(401).json({ error: "Token inválido" });
+    throw new AppError("Token inválido", 401);
   }
 }
