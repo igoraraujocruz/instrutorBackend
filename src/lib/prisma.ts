@@ -3,8 +3,12 @@ import "dotenv/config";
 import { PrismaClient } from "../../prisma/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 
+const DATABASE_URL = `postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}` +
+  `@${process.env.POSTGRES_HOST}:${process.env.POSTGRES_PORT}` +
+  `/${process.env.POSTGRES_DB}`;
+
 const adapter = new PrismaPg({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: DATABASE_URL,
 });
 const prisma = new PrismaClient({ adapter });
 
