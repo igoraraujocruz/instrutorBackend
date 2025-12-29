@@ -1,5 +1,4 @@
 import express, { NextFunction, Request, Response } from "express";
-import path from "path";
 import cors from "cors";
 import dotenv from "dotenv";
 import morgan from "morgan";
@@ -9,6 +8,7 @@ import instrutoresRouter from "./routes/instrutores";
 import { AppError } from "./utils/AppError";
 import { ValidationError } from "./utils/ValidationError";
 import { uploadDir } from "./config/upload";
+import { rateLimiterMiddleware } from "./rateLimiter";
 
 dotenv.config();
 
@@ -17,8 +17,14 @@ const PORT = process.env.PORT || 3001;
 
 app.use("/uploads", express.static(uploadDir));
 
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.SITE_URL,
+    credentials: true,
+  })
+);
 app.use(express.json());
+app.use(rateLimiterMiddleware);
 app.use(morgan("dev"));
 
 app.use("/usuarios", usersRouter);
