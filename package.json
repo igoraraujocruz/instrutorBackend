@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "type": "module",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.958.0",
     "@prisma/client": "^7.2.0",
@@ -19,10 +18,11 @@
     "uuid": "^13.0.0"
   },
   "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "start": "node --import tsx src/index.ts",
-    "build": "tsc"
-  },
+  "dev": "tsx watch src/index.ts",
+  "build": "tsc",
+  "start": "node dist/index.js"
+},
+
   "devDependencies": {
     "@prisma/adapter-pg": "^7.1.0",
     "@types/cors": "^2.8.19",
