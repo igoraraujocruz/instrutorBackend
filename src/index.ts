@@ -25,7 +25,7 @@ app.use("/usuarios", usersRouter);
 app.use("/instrutores", instrutoresRouter);
 
 app.get("/", (_, res) => {
-  res.send("Servidor moderno rodando!");
+  res.send("Servidor rodando!");
 });
 
 app.use(celebrateErrors());
