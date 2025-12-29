@@ -8,7 +8,7 @@ export const uploadDir = path.resolve(
   __dirname,
   "..",
   "..",
-  "tmp",
+  "temp",
   "uploads"
 );
 

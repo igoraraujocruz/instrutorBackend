@@ -29,3 +29,7 @@ node_modules
 /generated/prisma
 
 /generated/prisma
+
+temp/uploads/*
+
+!temp/uploads/.gitkeep
