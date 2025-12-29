@@ -6,18 +6,18 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout do código
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '22.15.0'
-          cache: 'yarn'
+          node-version: 22
+          cache: yarn
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
@@ -28,17 +28,17 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Deploy via SCP
+      - name: Upload files to server
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
-          source: "., !node_modules"
+          source: "./"
           target: "~/instrutorBackend"
 
-      - name: Update API
+      - name: Deploy on server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -47,6 +47,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/instrutorBackend
-            yarn
+            yarn install --production --frozen-lockfile
             npx prisma migrate deploy
             pm2 restart server || pm2 start dist/index.js --name server
