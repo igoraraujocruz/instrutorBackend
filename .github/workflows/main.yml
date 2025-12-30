@@ -43,7 +43,10 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/instrutorBackend
+            corepack enable
             yarn
-            ./node_modules/.bin/prisma migrate deploy
-            ./node_modules/.bin/prisma generate
-            pm2 restart server
+
+            npx prisma migrate deploy
+            npx prisma generate
+
+            pm2 reload server --update-env || pm2 start dist/index.js --name server --update-env
