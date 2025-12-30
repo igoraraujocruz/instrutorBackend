@@ -50,7 +50,6 @@ export class GeoService {
     estado: string,
     cidade: string
   ): Promise<LatLng | null> {
-    console.log('BUSCOUUUU')
     const url = `https://nominatim.openstreetmap.org/search?city=${encodeURIComponent(
       cidade
     )}&state=${encodeURIComponent(

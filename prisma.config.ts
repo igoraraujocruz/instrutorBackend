@@ -1,5 +1,3 @@
-import "dotenv/config";
-
 import { defineConfig } from "prisma/config";
 
 const DATABASE_URL = `postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}` +

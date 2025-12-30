@@ -19,9 +19,9 @@
     "uuid": "^13.0.0"
   },
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "cross-env NODE_ENV=development tsx watch src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "cross-env NODE_ENV=production node dist/index.js"
   },
   "devDependencies": {
     "@prisma/adapter-pg": "^7.1.0",
@@ -33,6 +33,7 @@
     "@types/multer-s3": "^3.0.3",
     "@types/node": "^25.0.2",
     "@types/redis": "^4.0.11",
+    "cross-env": "^10.1.0",
     "prisma": "^7.2.0",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
