@@ -73,5 +73,5 @@ app.use(
 );
 
 app.listen(PORT, () => {
-  console.log(`🚀 Servidor rodando em http://localhost:${PORT} e rodando: ${process.env.NODE_ENV} novoooo`);
+  console.log(`🚀 Servidor rodando em http://localhost:${PORT} e rodando em modo de: ${process.env.NODE_ENV}`);
 });
