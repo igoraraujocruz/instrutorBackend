@@ -45,4 +45,4 @@ jobs:
           script: |
             cd ~/instrutorBackend
             npx prisma migrate deploy
-            pm2 reload server --env NODE_ENV=production
+            pm2 reload server --update-env || pm2 start yarn --name server -- start --env NODE_ENV=production
