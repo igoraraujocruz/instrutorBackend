@@ -32,7 +32,7 @@ app.use("/usuarios", usersRouter);
 app.use("/instrutores", instrutoresRouter);
 
 app.get("/", (_, res) => {
-  res.send("Servidor rodando!");
+  res.send("Servidor rodando! aquiiii");
 });
 
 app.use(celebrateErrors());
@@ -73,5 +73,5 @@ app.use(
 );
 
 app.listen(PORT, () => {
-  console.log(`🚀 Servidor rodando em http://localhost:${PORT}, outro teste`);
+  console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
 });
