@@ -3,26 +3,37 @@ name: CI
 on:
   push:
     branches: [ master ]
+
   workflow_dispatch:
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v2
+      
+      - name: Setup Nodejs
+        uses: actions/setup-node@v2
+        with:
+          node-version: '22.15.0'
+				
+      - name: Install Dependencies
+        run: yarn
 
-      - name: Deploy files
-        uses: appleboy/scp-action@master
+      - name: Build
+        run: yarn build
+				
+      - uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
-          source: ".,!node_modules,!dist"
-          target: "/home/app/instrutorBackend"
+          source: ".,!node_modules"
+          target: "~/instrutorBackend"
 
-      - name: Build and restart on server
+      - name: Update API
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -30,18 +41,8 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            set -e
-            set -x
-
-            cd /home/app/instrutorBackend
-
-            export NODE_ENV=production
-
-            corepack enable
+            cd ~/instrutorBackend
             yarn
-            yarn build
-
-            npx prisma migrate deploy
-            npx prisma generate
-
-            pm2 reload server --update-env || pm2 start dist/index.js --name server --update-env
+            ./node_modules/.bin/prisma migrate deploy
+            ./node_modules/.bin/prisma generate
+            pm2 restart server
