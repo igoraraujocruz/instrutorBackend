@@ -27,5 +27,19 @@
       "lng": -40.6287836,
       "source": "nominatim"
     }
+  },
+  "al": {
+    "Campo Alegre": {
+      "lat": -9.7798607,
+      "lng": -36.3575793,
+      "source": "nominatim"
+    }
+  },
+  "go": {
+    "Americano do Brasil": {
+      "lat": -16.2515808,
+      "lng": -49.9806104,
+      "source": "nominatim"
+    }
   }
 }
