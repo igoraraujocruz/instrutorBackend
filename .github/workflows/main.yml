@@ -20,7 +20,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
           source: ".,!node_modules,!dist"
-          target: "~/instrutorBackend"
+          target: "/home/app/instrutorBackend"
 
       - name: Build and restart on server
         uses: appleboy/ssh-action@master
@@ -30,14 +30,18 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd ~/instrutorBackend
+            set -e
+            set -x
+
+            cd /home/app/instrutorBackend
 
             export NODE_ENV=production
 
+            corepack enable
             yarn
             yarn build
 
             npx prisma migrate deploy
             npx prisma generate
 
-            pm2 reload server || pm2 start dist/index.js --name server
+            pm2 reload server --update-env || pm2 start dist/index.js --name server --update-env
