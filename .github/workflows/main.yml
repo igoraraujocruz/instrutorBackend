@@ -1,52 +1,37 @@
-name: CI
+name: Deploy Production
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
   workflow_dispatch:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
-      - name: Checkout
+      - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: yarn
 
-      - name: Install dependencies
+      - name: Instalar dependências
         run: yarn install --frozen-lockfile
 
-      - name: Generate Prisma Client
+      - name: Gerar Prisma Client
         run: npx prisma generate
 
-      - name: Build
+      - name: Rodar migrations (deploy)
+        run: npx prisma migrate deploy
+
+      - name: Build da aplicação
         run: yarn build
 
-      - name: Upload files to server
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          port: ${{ secrets.SSH_PORT }}
-          key: ${{ secrets.SSH_KEY }}
-          source: "./"
-          target: "~/instrutorBackend"
-
-      - name: Deploy on server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          port: ${{ secrets.SSH_PORT }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            cd ~/instrutorBackend
-            yarn install --production --frozen-lockfile
-            npx prisma migrate deploy
-            pm2 restart server || pm2 start dist/index.js --name server
+      - name: Restart PM2 (production)
+        run: |
+          pm2 reload mock-server --update-env || pm2 start dist/index.js --name mock-server
