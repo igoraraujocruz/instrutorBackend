@@ -19,6 +19,9 @@ jobs:
       - name: Install dependencies
         run: yarn
 
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
       - name: Build
         run: yarn build
 
