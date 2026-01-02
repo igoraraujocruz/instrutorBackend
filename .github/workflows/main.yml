@@ -14,7 +14,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 20
 
       - name: Install dependencies
         run: yarn
@@ -44,5 +44,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/instrutorBackend
+            yarn build
             npx prisma migrate deploy
             pm2 reload server --update-env || pm2 start yarn --name server -- start --env NODE_ENV=production
