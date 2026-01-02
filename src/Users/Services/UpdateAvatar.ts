@@ -33,7 +33,7 @@ export class UpdateAvatar {
     const foto =
       process.env.NODE_ENV === "production"
         ? (file as any).location
-        : `${process.env.API_URL}/uploads/${file.filename}`;
+        : `${process.env.API_URL}/uploads/avatars/${file.filename}`;
 
     return this.userRepository.updateAvatar(userId, foto);
   }

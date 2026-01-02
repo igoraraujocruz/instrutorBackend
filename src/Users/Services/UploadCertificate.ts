@@ -1,6 +1,7 @@
 import { PDFParse } from "pdf-parse";
 import { AppError } from "../../utils/AppError";
 import { deleteFileSafe } from "../../utils/deleteFile";
+import { StorageProvider } from "../../providers/StorageProvider";
 
 interface ExpectedData {
   nome?: string;
@@ -8,6 +9,8 @@ interface ExpectedData {
 }
 
 export class UploadCertificate {
+  private storage = new StorageProvider();
+
   async execute(
     certificado: Express.Multer.File,
     expected?: ExpectedData
@@ -57,7 +60,10 @@ export class UploadCertificate {
       };
 
     } catch (err: any) {
-      await deleteFileSafe(certificado?.path);
+      // 👇 path relativo salvo no banco
+      const relativePath = `certificados/${certificado.filename}`;
+      await this.storage.delete(relativePath);
+
       console.error("❌ ERRO AO PROCESSAR CERTIFICADO");
       console.error(err.message);
       throw err;

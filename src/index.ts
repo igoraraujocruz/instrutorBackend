@@ -8,8 +8,8 @@ import usersRouter from "./Users/routes";
 import instrutoresRouter from "./routes/instrutores";
 import { AppError } from "./utils/AppError";
 import { ValidationError } from "./utils/ValidationError";
-import { uploadDir } from "./config/upload";
 import { rateLimiterMiddleware } from "./rateLimiter";
+import { uploadDir } from "./config/upload";
 
 dotenv.config();
 
@@ -17,6 +17,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use("/uploads", express.static(uploadDir));
+
 
 app.use(
   cors({

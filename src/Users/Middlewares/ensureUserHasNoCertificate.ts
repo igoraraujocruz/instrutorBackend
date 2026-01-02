@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import { FindById } from "../Services/FindById";
 import { UserRepository } from "../UserRepository";
 import { AppError } from "../../utils/AppError";
 
