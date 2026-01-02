@@ -10,11 +10,14 @@ import { AppError } from "./utils/AppError";
 import { ValidationError } from "./utils/ValidationError";
 import { rateLimiterMiddleware } from "./rateLimiter";
 import { uploadDir } from "./config/upload";
+import { prisma } from "./lib/prisma";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+
 
 app.use("/uploads", express.static(uploadDir));
 
@@ -73,6 +76,20 @@ app.use(
   }
 );
 
-app.listen(PORT, () => {
-  console.log(`🚀 Servidor rodando em http://localhost:${PORT} e rodando em modo de: ${process.env.NODE_ENV}`);
-});
+async function startServer() {
+  try {
+    await prisma.$connect();
+    console.log(`✅ Conectado ao Banco de Dados!`);
+
+    app.listen(PORT, () => {
+      console.log(
+        `✅ Servidor rodando em http://localhost:${PORT} | NODE_ENV=${process.env.NODE_ENV}`
+      );
+    });
+  } catch (error) {
+    console.error("❌ Erro ao conectar no banco:", error);
+    process.exit(1); // encerra a aplicação
+  }
+}
+
+startServer();

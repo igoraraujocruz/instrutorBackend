@@ -13,6 +13,7 @@ const {
 
 const DATABASE_URL = `postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}`;
 
+
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {

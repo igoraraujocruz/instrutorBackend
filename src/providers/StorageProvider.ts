@@ -10,8 +10,6 @@ export class StorageProvider {
 
     // 🔥 DEV - arquivo local
     if (process.env.NODE_ENV !== "production") {
-      console.log(uploadDir)
-      console.log(fileKey)
 
       const filePath = path.resolve(uploadDir, fileKey);
 

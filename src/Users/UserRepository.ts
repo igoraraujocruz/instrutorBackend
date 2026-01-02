@@ -148,6 +148,9 @@ async update(user: UserUpdate): Promise<Usuario | null> {
 
     async findByProvider(provider: string, providerId: string): Promise<Usuario | null> {
 
+      console.log(provider)
+      console.log(providerId)
+
         const user = await prisma.usuario.findUnique({
             where: {
                 provider_providerId: {
@@ -160,6 +163,8 @@ async update(user: UserUpdate): Promise<Usuario | null> {
             }
         });
 
+        console.log(user)
+        
         return user;
 
     }
