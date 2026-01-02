@@ -27,14 +27,19 @@ export class UpdateAvatar {
 
     // 🔥 Remove avatar antigo
     if (user.foto) {
-      await this.storageProvider.delete(user.foto);
+      await this.storageProvider.delete(`avatars/${user.foto}`);
     }
 
-    const foto =
+    const { foto } = await this.userRepository.updateAvatar(userId, file.filename);
+
+          const fotoUpdated =
       process.env.NODE_ENV === "production"
         ? (file as any).location
-        : `${process.env.API_URL}/uploads/avatars/${file.filename}`;
+        : `${process.env.API_URL}/uploads/avatars/${foto}`;
 
-    return this.userRepository.updateAvatar(userId, foto);
+        return {
+          ...user,
+          foto: fotoUpdated
+        }
   }
 }

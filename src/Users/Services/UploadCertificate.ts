@@ -1,6 +1,5 @@
 import { PDFParse } from "pdf-parse";
 import { AppError } from "../../utils/AppError";
-import { deleteFileSafe } from "../../utils/deleteFile";
 import { StorageProvider } from "../../providers/StorageProvider";
 
 interface ExpectedData {
