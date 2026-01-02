@@ -79,11 +79,18 @@ app.use(
 async function startServer() {
   try {
     await prisma.$connect();
-    console.log(`✅ Conectado ao Banco de Dados!`);
+    const query = await prisma.$queryRaw`SELECT 1`;
+    if(query) {
+      console.log(
+        `✅ Conectado ao Banco de Dados`
+      );
+    } else {
+        `❌ Conexão do Banco de Dados Falhou!`
+    }
 
     app.listen(PORT, () => {
       console.log(
-        `✅ Servidor rodando em http://localhost:${PORT} | NODE_ENV=${process.env.NODE_ENV}`
+        `🚀 Servidor rodando em http://localhost:${PORT} | NODE_ENV=${process.env.NODE_ENV}`
       );
     });
   } catch (error) {
