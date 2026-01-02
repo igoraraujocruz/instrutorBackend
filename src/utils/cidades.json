@@ -26,6 +26,26 @@
       "lat": -19.5346732,
       "lng": -40.6287836,
       "source": "nominatim"
+    },
+    "Barra de São Francisco": {
+      "lat": -18.7570902,
+      "lng": -40.8916119,
+      "source": "nominatim"
+    },
+    "Alto Rio Novo": {
+      "lat": -19.0577208,
+      "lng": -41.0171518,
+      "source": "nominatim"
+    },
+    "Apiacá": {
+      "lat": -21.152272,
+      "lng": -41.569297,
+      "source": "nominatim"
+    },
+    "Vila Velha": {
+      "lat": -20.3297037,
+      "lng": -40.2920174,
+      "source": "nominatim"
     }
   },
   "al": {
@@ -39,6 +59,56 @@
     "Americano do Brasil": {
       "lat": -16.2515808,
       "lng": -49.9806104,
+      "source": "nominatim"
+    }
+  },
+  "pr": {
+    "Ângulo": {
+      "lat": -23.1958345,
+      "lng": -51.9094976,
+      "source": "nominatim"
+    },
+    "Andirá": {
+      "lat": -23.0494761,
+      "lng": -50.2310027,
+      "source": "nominatim"
+    },
+    "Cantagalo": {
+      "lat": -25.3735238,
+      "lng": -52.1238114,
+      "source": "nominatim"
+    },
+    "Antonina": {
+      "lat": -25.4298854,
+      "lng": -48.7125431,
+      "source": "nominatim"
+    }
+  },
+  "pe": {
+    "Barra de Guabiraba": {
+      "lat": -8.4173522,
+      "lng": -35.6626669,
+      "source": "nominatim"
+    }
+  },
+  "pb": {
+    "Araruna": {
+      "lat": -6.5321155,
+      "lng": -35.7397595,
+      "source": "nominatim"
+    }
+  },
+  "to": {
+    "Xambioá": {
+      "lat": -6.4084693,
+      "lng": -48.5336069,
+      "source": "nominatim"
+    }
+  },
+  "rr": {
+    "Iracema": {
+      "lat": 2.1664742,
+      "lng": -61.0513048,
       "source": "nominatim"
     }
   }

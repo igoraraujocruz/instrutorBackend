@@ -1,3 +1,9 @@
+type Instrutor = { 
+  id: string;
+  certificado: string | null;
+  certificadoCodigo: string | null;
+}
+
 export type Usuario = {
     id: string;
     nome: string;
@@ -7,6 +13,7 @@ export type Usuario = {
     provider: string;
     providerId: string;
     foto: string | null;
+    instrutor?: Instrutor | null;
 }
 
 export interface UserUpdate {
@@ -22,6 +29,8 @@ export interface UserUpdate {
   slug?: string;
   latitude?: number;
   longitude?: number;
+  certificado?: string;
+  certificadoCodigo?: string;
 }
 
 export interface CreateProps {

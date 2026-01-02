@@ -2,8 +2,8 @@ import { Router } from "express";
 import { celebrate, Joi, Segments } from "celebrate";
 import { authMiddleware } from "./Middlewares/auth";
 import { userController } from "./UserFactory";
-import { upload } from "../config/upload";
-
+import { uploadAvatar, uploadCertificado } from "../config/upload";
+import { ensureUserHasNoCertificate } from "./Middlewares/ensureUserHasNoCertificate";
 
 const router = Router();
 
@@ -26,6 +26,7 @@ router.get("/me", authMiddleware, userController.get);
 router.put(
   "/me",
   authMiddleware,
+  uploadCertificado.single("certificado"),
   celebrate({
     [Segments.BODY]: Joi.object({      
     nome: Joi.string().optional(),
@@ -38,6 +39,7 @@ router.put(
 
     descricao: Joi.string().optional(),
     preco: Joi.number().optional(),
+    certificado: Joi.allow(),
     slug: Joi.string()
       .lowercase()
       .pattern(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
@@ -48,14 +50,16 @@ router.put(
       "object.and": "Estado e cidade devem ser enviados juntos",
     }),
   }),
+  ensureUserHasNoCertificate,
   userController.update
 );
 
 router.patch(
   "/avatar",
   authMiddleware,
-  upload.single("foto"),
+  uploadAvatar.single("foto"),
   userController.updateAvatar
 );
+
 
 export default router;

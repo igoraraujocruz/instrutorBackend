@@ -17,9 +17,13 @@ export class UserRepository {
 }
 
 
-  async findByCPF(cpf: string): Promise<Usuario | null> {
+  async findByCPF(userId:string, cpf: string): Promise<Usuario | null> {
       const user = await prisma.usuario.findFirst({
-          where: { cpf },
+          where: { cpf,
+            id: {
+              not: userId,
+            },
+           },
           include: { instrutor: true },
       });
 
@@ -57,7 +61,11 @@ async update(user: UserUpdate): Promise<Usuario | null> {
     slug,
     latitude,
     longitude,
+    certificado,
+    certificadoCodigo
   } = user;
+
+  const precoNumber = preco !== undefined ? Number(preco) : undefined;
 
   const geoService = new GeoService();
 
@@ -92,30 +100,30 @@ async update(user: UserUpdate): Promise<Usuario | null> {
           ? {
               upsert: {
                 create: {
-                  slug: slug ?? `instrutor-${Date.now()}`,
-                  estado: estado ?? "",
-                  cidade: cidade ?? "",
-                  cidadeSlug: cidade
-                    ? slugify(cidade)
-                    : "cidade-nao-informada",
-                  descricao: descricao ?? "",
-                  preco: preco ?? 0,
-                  classe: "default",
-                  latitude: lat ?? 0,
-                  longitude: lng ?? 0,
-                },
+  slug: slug ?? `instrutor-${Date.now()}`,
+  estado: estado ?? "",
+  cidade: cidade ?? "",
+  cidadeSlug: cidade ? slugify(cidade) : "cidade-nao-informada",
+  descricao: descricao ?? "",
+  preco: precoNumber ?? 0,
+  classe: "default",
+  latitude: lat ?? 0,
+  longitude: lng ?? 0,
+  ...(certificadoCodigo && { certificadoCodigo }),
+  ...(certificado && { certificado }),
+},
                 update: {
-                  ...(slug !== undefined && { slug }),
-                  ...(estado !== undefined && { estado }),
-                  ...(cidade !== undefined && {
-                    cidade,
-                    cidadeSlug: slugify(cidade),
-                  }),
-                  ...(descricao !== undefined && { descricao }),
-                  ...(preco !== undefined && { preco }),
-                  ...(lat !== undefined && { latitude: lat }),
-                  ...(lng !== undefined && { longitude: lng }),
-                },
+  ...(slug && { slug }),
+  ...(estado && { estado }),
+  ...(cidade && { cidade, cidadeSlug: slugify(cidade) }),
+  ...(descricao && { descricao }),
+  ...(precoNumber !== undefined && { preco: precoNumber }),
+  ...(lat !== undefined && { latitude: lat }),
+  ...(lng !== undefined && { longitude: lng }),
+  ...(certificadoCodigo && { certificadoCodigo }),
+  ...(certificado && { certificado }), // precisa ser string
+},
+
               },
             }
           : undefined,

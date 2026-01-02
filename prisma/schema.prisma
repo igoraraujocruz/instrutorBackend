@@ -29,6 +29,8 @@ model Instrutor {
   preco      Float
   latitude   Float
   longitude  Float
+  certificadoCodigo String?
+  certificado String?
   slug       String     @unique
   usuarioId  String        @unique
   usuario    Usuario    @relation(fields: [usuarioId], references: [id])

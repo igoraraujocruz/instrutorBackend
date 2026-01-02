@@ -1,14 +1,26 @@
+import 'dotenv/config';
+
 import { defineConfig } from "prisma/config";
 
-const DATABASE_URL = `postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}` +
-  `@${process.env.POSTGRES_HOST}:${process.env.POSTGRES_PORT}` +
-  `/${process.env.POSTGRES_DB}`;
+const {
+  POSTGRES_USER,
+  POSTGRES_PASSWORD,
+  POSTGRES_HOST,
+  POSTGRES_PORT,
+  POSTGRES_DB
+} = process.env;
+
+if (!POSTGRES_USER || !POSTGRES_PASSWORD || !POSTGRES_HOST || !POSTGRES_PORT || !POSTGRES_DB) {
+  throw new Error("Variáveis de ambiente do Postgres incompletas!");
+}
+
+const DATABASE_URL = `postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}`;
 
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
     path: "prisma/migrations",
-    seed: "tsx prisma/seed.ts"
+    seed: "tsx prisma/seed.ts",
   },
   datasource: {
     url: DATABASE_URL,

@@ -10,7 +10,7 @@ export class UserController {
     private userAuth: Auth,
     private userUpdate: UpdateUser,
     private userFind: FindById,
-    private userUpdateAvatar: UpdateAvatar
+    private userUpdateAvatar: UpdateAvatar,
   ){
     this.auth = this.auth.bind(this);
     this.get = this.get.bind(this);
@@ -35,6 +35,7 @@ export class UserController {
     const data = {
     userId: req.userId,
     ...req.body,
+    certificado: req.file,
   };
 
     const user = await this.userUpdate.execute(data)
