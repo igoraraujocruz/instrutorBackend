@@ -5,7 +5,7 @@ on:
     branches: [ master ]
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -32,7 +32,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
-          source: "dist,prisma,package.json,yarn.lock"
+          source: "dist,node_modules,prisma,package.json"
           target: "~/instrutorBackend"
 
       - name: Update API
@@ -44,7 +44,5 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/instrutorBackend
-            yarn
-            npx prisma generate
             npx prisma migrate deploy
-            pm2 reload server --update-env || pm2 start dist/server.js --name server
+            pm2 reload server --update-env || pm2 start yarn --name server -- start --env NODE_ENV=production
