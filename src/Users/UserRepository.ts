@@ -173,10 +173,7 @@ async update(user: UserUpdate): Promise<Usuario | null> {
         nome,
         email,
         foto
-      },
-      include: {
-        instrutor: true,
-      },
+      }
     });
 
     return user;
