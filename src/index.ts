@@ -1,7 +1,6 @@
 import "dotenv/config";
 import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import morgan from "morgan";
 import { errors as celebrateErrors, isCelebrateError } from "celebrate";
 import usersRouter from "./Users/routes";
@@ -12,7 +11,6 @@ import { rateLimiterMiddleware } from "./rateLimiter";
 import { uploadDir } from "./config/upload";
 import { prisma } from "./lib/prisma";
 
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
