@@ -18,6 +18,8 @@ export class Create {
     async execute(data: FindOrCreateUserDTO) {
         const { provider, providerId, nome, email, foto } = data
 
+        console.log(data)
+
 
          const existingUser = await this.userRepository.findByProvider(
             provider,
