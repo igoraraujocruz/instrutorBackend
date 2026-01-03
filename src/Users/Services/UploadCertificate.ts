@@ -7,8 +7,6 @@ interface ExpectedData {
   cpf?: string;
 }
 
-console.log()
-
 export class UploadCertificate {
   private storage = new StorageProvider();
 
@@ -18,8 +16,6 @@ export class UploadCertificate {
     },
     expected?: ExpectedData
   ) {
-
-    console.log(certificado)
     try {
       const parser = new PDFParse({ url: process.env.NODE_ENV == 'development' ? certificado.path : certificado.location});
 
@@ -68,9 +64,6 @@ export class UploadCertificate {
       // 👇 path relativo salvo no banco
       const relativePath = `certificados/${certificado.filename}`;
       await this.storage.delete(relativePath);
-
-      console.error("❌ ERRO AO PROCESSAR CERTIFICADO");
-      console.error(err.message);
       throw err;
     }
   }
