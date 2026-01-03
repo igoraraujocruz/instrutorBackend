@@ -26,7 +26,6 @@ export class UserController {
   }
 
   async get(req: Request, res: Response) {
-    console.log(req.userId)
     const usuario = await this.userFind.execute(req.userId!);
 
     return res.json(usuario);
