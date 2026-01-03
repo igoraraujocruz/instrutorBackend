@@ -135,8 +135,9 @@ async update(user: UserUpdate): Promise<Usuario | null> {
 }
 
 
-    async findById(userId: string): Promise<Usuario | null> {
-        const user = await prisma.usuario.findUnique({
+    async findById(userId: string) {
+        try {
+          const user = await prisma.usuario.findUnique({
             where: { id: userId },
             include: {
               instrutor: true
@@ -144,6 +145,9 @@ async update(user: UserUpdate): Promise<Usuario | null> {
           });
         
           return user;
+        } catch(err) {
+          console.log(err)
+        }
     }
 
     async findByProvider(provider: string, providerId: string): Promise<Usuario | null> {
