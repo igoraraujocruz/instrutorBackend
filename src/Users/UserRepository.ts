@@ -139,9 +139,6 @@ async update(user: UserUpdate): Promise<Usuario | null> {
         try {
           const user = await prisma.usuario.findUnique({
             where: { id: userId },
-            include: {
-              instrutor: true
-            }
           });
         
           return user;
