@@ -1,14 +1,22 @@
 import { Create } from "./Create";
 import jwt from "jsonwebtoken";
 
+interface FindOrCreateUserDTO {
+  provider: string
+  providerId: string
+  nome: string
+  email: string
+  foto?: string
+}
+
 export class Auth {
     constructor(
         private createService: Create
     ){}
 
-    async execute(provider: string, providerId: string, nome: string, email: string, foto?: string) {
+    async execute(data: FindOrCreateUserDTO) {
     
-        const user = await this.createService.execute(provider, providerId, nome, email, foto);
+        const user = await this.createService.execute(data);
 
           if (!user) {
             throw new Error("Falha ao autenticar usuário");

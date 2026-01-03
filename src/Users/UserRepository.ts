@@ -148,11 +148,7 @@ async update(user: UserUpdate): Promise<Usuario | null> {
 
     async findByProvider(provider: string, providerId: string): Promise<Usuario | null> {
 
-      console.log(provider)
-      console.log(providerId)
-
-        try {
-          const user = await prisma.usuario.findUnique({
+        const user = await prisma.usuario.findUnique({
             where: {
                 provider_providerId: {
                     provider,
@@ -165,16 +161,12 @@ async update(user: UserUpdate): Promise<Usuario | null> {
         });
         
         return user;
-        } catch(err) {
-          console.log(err)
-        }
-
-        return null
 
     }
 
-  async create({ provider, providerId, nome, email, foto }: CreateProps): Promise<Usuario> {
-   const user = await prisma.usuario.create({
+  async create({ provider, providerId, nome, email, foto }: CreateProps) {
+   try {
+    const user = await prisma.usuario.create({
       data: {
         provider,
         providerId,
@@ -188,6 +180,9 @@ async update(user: UserUpdate): Promise<Usuario | null> {
     });
 
     return user;
+   } catch(err) {
+    console.log(err)
+   }
   }
 
 async updateAvatar(userId: string, foto: string): Promise<Usuario> {
