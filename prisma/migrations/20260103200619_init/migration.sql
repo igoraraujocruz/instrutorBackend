@@ -21,8 +21,10 @@ CREATE TABLE "Instrutor" (
     "classe" TEXT NOT NULL,
     "descricao" TEXT,
     "preco" DOUBLE PRECISION NOT NULL,
-    "latitude" INTEGER NOT NULL,
-    "longitude" INTEGER NOT NULL,
+    "latitude" DOUBLE PRECISION NOT NULL,
+    "longitude" DOUBLE PRECISION NOT NULL,
+    "certificadoCodigo" TEXT,
+    "certificado" TEXT,
     "slug" TEXT NOT NULL,
     "usuarioId" TEXT NOT NULL,
 

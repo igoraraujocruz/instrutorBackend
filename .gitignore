@@ -35,3 +35,6 @@ temp/uploads/*
 !temp/uploads/.gitkeep
 
 dist
+/src/generated/prisma
+
+/src/generated/prisma

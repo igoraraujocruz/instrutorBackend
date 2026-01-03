@@ -103,6 +103,11 @@
       "lat": -6.4084693,
       "lng": -48.5336069,
       "source": "nominatim"
+    },
+    "Guaraí": {
+      "lat": -8.835429,
+      "lng": -48.511432,
+      "source": "nominatim"
     }
   },
   "rr": {
