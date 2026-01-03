@@ -6,8 +6,6 @@ const DATABASE_URL = `postgresql://${process.env.POSTGRES_USER}:${process.env.PO
   `@${process.env.POSTGRES_HOST}:${process.env.POSTGRES_PORT}` +
   `/${process.env.POSTGRES_DB}`;
 
-
-  console.log(DATABASE_URL)
 const adapter = new PrismaPg({
   connectionString: DATABASE_URL,
 });
