@@ -38,3 +38,6 @@ dist
 /src/generated/prisma
 
 /src/generated/prisma
+
+
+src/utils/cidades.json

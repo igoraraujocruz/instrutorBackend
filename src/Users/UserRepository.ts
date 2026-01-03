@@ -170,8 +170,7 @@ async update(user: UserUpdate): Promise<Usuario | null> {
     }
 
   async create({ provider, providerId, nome, email, foto }: CreateProps) {
-    try {
-      const user = await prisma.usuario.create({
+    const user = await prisma.usuario.create({
       data: {
         provider,
         providerId,
@@ -182,9 +181,6 @@ async update(user: UserUpdate): Promise<Usuario | null> {
     });
 
     return user;
-    }catch(err) {
-      console.log(err)
-    }
   }
 
 async updateAvatar(userId: string, foto: string): Promise<Usuario> {

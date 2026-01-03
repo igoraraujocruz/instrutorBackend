@@ -32,11 +32,14 @@ export class UserController {
   }
 
   async update(req: Request, res: Response) {
+    
     const data = {
     userId: req.userId,
     ...req.body,
     certificado: req.file,
   };
+
+  console.log(data)
 
     const user = await this.userUpdate.execute(data)
 
