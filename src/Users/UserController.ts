@@ -19,8 +19,8 @@ export class UserController {
   }
 
   async auth(req: Request, res: Response) {
-    const { provider, providerId, nome, email, foto } = req.body;
-    const user = await this.userAuth.execute(provider, providerId, nome, email, foto);
+    const data = req.body;
+    const user = await this.userAuth.execute(data);
 
     return res.status(200).json(user);
   }
