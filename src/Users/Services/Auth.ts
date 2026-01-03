@@ -10,8 +10,6 @@ export class Auth {
     
         const user = await this.createService.execute(provider, providerId, nome, email, foto);
 
-        
-
           if (!user) {
             throw new Error("Falha ao autenticar usuário");
           }
