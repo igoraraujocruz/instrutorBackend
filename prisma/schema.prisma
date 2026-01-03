@@ -15,7 +15,7 @@ model Usuario {
   provider   String
   providerId String
   foto       String?
-  instrutor  Instrutor?
+  instrutor  Instrutor? @relation("UsuarioInstrutor")
   @@unique([provider, providerId])
 }
 
@@ -33,7 +33,7 @@ model Instrutor {
   certificado String?
   slug       String     @unique
   usuarioId  String        @unique
-  usuario    Usuario    @relation(fields: [usuarioId], references: [id])
+  usuario    Usuario @relation("UsuarioInstrutor", fields: [usuarioId], references: [id])
   avaliacoes Avaliacao[]
 }
 
