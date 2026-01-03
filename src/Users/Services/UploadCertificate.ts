@@ -7,15 +7,21 @@ interface ExpectedData {
   cpf?: string;
 }
 
+console.log()
+
 export class UploadCertificate {
   private storage = new StorageProvider();
 
   async execute(
-    certificado: Express.Multer.File,
+    certificado: Express.Multer.File & {
+      location?: string;
+    },
     expected?: ExpectedData
   ) {
+
+    console.log(certificado)
     try {
-      const parser = new PDFParse({ url: certificado.path });
+      const parser = new PDFParse({ url: process.env.NODE_ENV == 'development' ? certificado.path : certificado.location});
 
       const result = await parser.getText();
       await parser.destroy();

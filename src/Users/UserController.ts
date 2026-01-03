@@ -39,8 +39,6 @@ export class UserController {
     certificado: req.file,
   };
 
-  console.log(data)
-
     const user = await this.userUpdate.execute(data)
 
     return res.json(user);
