@@ -12,20 +12,38 @@ jobs:
     steps:
       # 1️⃣ Baixa o código no runner
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
-      # 2️⃣ Node no runner (apenas validação)
+      # 2️⃣ Node.js no runner (apenas para validação)
       - name: Setup Node.js (runner)
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v2
         with:
-          node-version: '20'
+          node-version: '22.15.0'
 
-      # 3️⃣ Instala deps e valida build
-      - run: yarn install --frozen-lockfile
-      - run: npx prisma generate
-      - run: yarn build
+      # 3️⃣ Instala dependências no runner
+      - name: Install dependencies (runner)
+        run: yarn install --frozen-lockfile
 
-      # 4️⃣ Deploy REAL no servidor (git pull)
+      # 4️⃣ Gera Prisma Client (runner)
+      - name: Generate Prisma client (runner)
+        run: npx prisma generate
+
+      # 5️⃣ Valida o build (TypeScript, etc)
+      - name: Validate build (runner)
+        run: yarn build
+
+      # 6️⃣ Copia APENAS código e configs (sem node_modules)
+      - name: Copy code to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "package.json,yarn.lock,src,prisma,tsconfig.json"
+          target: "~/instrutorBackend"
+
+      # 7️⃣ Instala deps, gera prisma, build e reinicia no servidor
       - name: Deploy on server
         uses: appleboy/ssh-action@master
         with:
@@ -35,8 +53,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/instrutorBackend
-            git fetch origin
-            git reset --hard origin/master
             yarn install --frozen-lockfile
             npx prisma generate
             npx prisma migrate deploy
