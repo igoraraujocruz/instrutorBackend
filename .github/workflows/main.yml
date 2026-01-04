@@ -55,8 +55,9 @@ jobs:
             cd ~/instrutorBackend
 
             yarn install --frozen-lockfile
-            ./node_modules/.bin/prisma generate
-            ./node_modules/.bin/prisma migrate deploy
+            ./node_modules/.bin/prisma 
+            npx prisma generate
+            npx prisma migrate deploy
             yarn build
 
             pm2 restart server
