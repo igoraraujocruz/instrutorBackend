@@ -10,45 +10,41 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Pega o código do repositório
+      # 1️⃣ Checkout do código
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # 2️⃣ Configura Node.js no runner (para validar build)
+      # 2️⃣ Node.js no runner
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '22.15.0'
 
-      # 3️⃣ Instala dependências no runner para validação
+      # 3️⃣ Instala dependências (gera node_modules)
       - name: Install Dependencies (runner)
         run: yarn install --frozen-lockfile
 
+      # 4️⃣ Gera Prisma Client
       - name: Generate Prisma client (runner)
         run: npx prisma generate
 
-      # 4️⃣ Valida build no runner
-      - name: Validate Build (runner)
+      # 5️⃣ Build definitivo
+      - name: Build (runner)
         run: yarn build
 
-      # 5️⃣ Copia apenas arquivos necessários para o servidor
-      - name: Copy code to server
+      # 6️⃣ Copia TUDO para o servidor (incluindo node_modules)
+      - name: Copy project to server
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
-          source: |
-            package.json
-            yarn.lock
-            prisma
-            src
-            tsconfig.json
+          source: ".,!node_modules/.cache"
           target: "~/instrutorBackend"
 
-      # 6️⃣ Atualiza dependências, build e migrations no servidor
-      - name: Update API on server
+      # 7️⃣ Apenas executar Prisma + restart (SEM yarn install)
+      - name: Restart API on server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -57,8 +53,5 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/instrutorBackend
-            yarn install --frozen-lockfile
-            npx prisma generate
             npx prisma migrate deploy
-            yarn build
             pm2 restart server
