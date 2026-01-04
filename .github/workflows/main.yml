@@ -45,7 +45,6 @@ jobs:
             prisma
             src
             tsconfig.json
-            .env # se necessário
           target: "~/instrutorBackend"
 
       # 6️⃣ Atualiza dependências, build e migrations no servidor
