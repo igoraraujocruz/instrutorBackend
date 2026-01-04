@@ -24,6 +24,9 @@ jobs:
       - name: Install Dependencies (runner)
         run: yarn install --frozen-lockfile
 
+      - name: Generate Prisma client (runner)
+        run: npx prisma generate
+
       # 4️⃣ Valida build no runner
       - name: Validate Build (runner)
         run: yarn build
