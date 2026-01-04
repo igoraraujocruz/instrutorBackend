@@ -9,9 +9,9 @@ datasource db {
 model Usuario {
   id         String @id @default(uuid())
   nome       String
-  cpf        String?
-  email      String?
-  telefone   String?
+  cpf        String? @unique
+  email      String? @unique
+  telefone   String? @unique
   provider   String
   providerId String
   foto       String?

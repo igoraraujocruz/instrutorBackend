@@ -44,6 +44,15 @@ CREATE TABLE "Avaliacao" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Usuario_cpf_key" ON "Usuario"("cpf");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Usuario_email_key" ON "Usuario"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Usuario_telefone_key" ON "Usuario"("telefone");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Usuario_provider_providerId_key" ON "Usuario"("provider", "providerId");
 
 -- CreateIndex

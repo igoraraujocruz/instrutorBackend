@@ -17,12 +17,11 @@ export class UserRepository {
 }
 
 
-  async findByCPF(userId:string, cpf: string): Promise<Usuario | null> {
+  async findByCPF(cpf: string, userId:string): Promise<Usuario | null> {
       const user = await prisma.usuario.findFirst({
-          where: { cpf,
-            id: {
-              not: userId,
-            },
+          where: { 
+            cpf,
+            NOT: { id: userId },
            },
           include: { instrutor: true },
       });

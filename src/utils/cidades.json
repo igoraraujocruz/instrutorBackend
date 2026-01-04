@@ -108,12 +108,24 @@
       "lat": -8.835429,
       "lng": -48.511432,
       "source": "nominatim"
+    },
+    "Arapoema": {
+      "lat": -7.6575001,
+      "lng": -49.0641484,
+      "source": "nominatim"
     }
   },
   "rr": {
     "Iracema": {
       "lat": 2.1664742,
       "lng": -61.0513048,
+      "source": "nominatim"
+    }
+  },
+  "mt": {
+    "Campos de Júlio": {
+      "lat": -13.7223646,
+      "lng": -59.2645296,
       "source": "nominatim"
     }
   }
