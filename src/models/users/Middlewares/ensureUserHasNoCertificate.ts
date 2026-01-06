@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { UserRepository } from "../UserRepository";
-import { AppError } from "../../utils/AppError";
+import { AppError } from "../../../utils/AppError";
 
 export async function ensureUserHasNoCertificate(
   req: Request,

@@ -1,7 +1,8 @@
-import { AppError } from "../../utils/AppError";
+import { AppError } from "../../../utils/AppError";
 import { UserRepository } from "../UserRepository";
-import { ValidationError } from "../../utils/ValidationError";
+import { ValidationError } from "../../../utils/ValidationError";
 import { UploadCertificate } from "./UploadCertificate";
+import { RatingRepository } from "../../ratings/RatingRepository";
 
 interface UpdateUserRequest {
   userId: string;
@@ -18,8 +19,10 @@ interface UpdateUserRequest {
 }
 
 export class UpdateUser {
-  constructor(private userRepository: UserRepository,
-    private uploadCertificate: UploadCertificate
+  constructor(
+    private userRepository: UserRepository,
+    private uploadCertificate: UploadCertificate,
+    private ratingRepository: RatingRepository
   ) {}
 
   async execute(data: UpdateUserRequest) {
@@ -78,6 +81,12 @@ const dataComCertificado = {
     certificado: certificado.filename as any,
   }),
 };
+
+const rating = await this.ratingRepository.findUserId(userId)
+
+if(rating) {
+  await this.ratingRepository.delete(rating.id)
+}
 
 const userUpdated = await this.userRepository.update(dataComCertificado);
 

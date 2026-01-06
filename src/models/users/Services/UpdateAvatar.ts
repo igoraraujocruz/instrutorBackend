@@ -1,6 +1,6 @@
 import { Usuario } from "@prisma/client";
-import { StorageProvider } from "../../providers/StorageProvider";
-import { AppError } from "../../utils/AppError";
+import { StorageProvider } from "../../../providers/StorageProvider";
+import { AppError } from "../../../utils/AppError";
 import { UserRepository } from "../UserRepository";
 
 interface UpdateAvatarInput {

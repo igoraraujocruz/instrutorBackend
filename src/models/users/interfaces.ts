@@ -4,7 +4,7 @@ type Instrutor = {
   certificadoCodigo: string | null;
 }
 
-export type Usuario = {
+export type User = {
     id: string;
     nome: string;
     cpf: string | null;

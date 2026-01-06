@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { AppError } from "../../utils/AppError";
+import { AppError } from "../../../utils/AppError";
 
 type AuthRequest = Request & { userId: string };
 

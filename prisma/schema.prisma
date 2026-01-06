@@ -17,6 +17,7 @@ model Usuario {
   foto       String?
 
   instrutor  Instrutor?
+  avaliacoes Avaliacao[]
 
   @@unique([provider, providerId])
 }
@@ -42,12 +43,21 @@ model Instrutor {
 }
 
 model Avaliacao {
-  id          String @id @default(uuid())
-  aluno       String
+  id          String   @id @default(uuid())
   nota        Int
-  comentario  String
-  data        DateTime
+  comentario  String?
 
-  instrutor   Instrutor @relation(fields: [instrutorId], references: [id], onDelete: Cascade)
+  usuarioId   String
+  usuario     Usuario   @relation(fields: [usuarioId], references: [id])
+
   instrutorId String
+  instrutor   Instrutor @relation(fields: [instrutorId], references: [id])
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  deletedAt   DateTime? 
+
+  @@unique([usuarioId, instrutorId, deletedAt])
+  @@index([deletedAt])
 }
+

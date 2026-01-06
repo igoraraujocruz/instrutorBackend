@@ -32,7 +32,6 @@ export class UserController {
   }
 
   async update(req: Request, res: Response) {
-    
     const data = {
     userId: req.userId,
     ...req.body,

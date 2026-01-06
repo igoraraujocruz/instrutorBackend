@@ -2,7 +2,7 @@ import { Router } from "express";
 import { celebrate, Joi, Segments } from "celebrate";
 import { authMiddleware } from "./Middlewares/auth";
 import { userController } from "./UserFactory";
-import { uploadAvatar, uploadCertificado } from "../config/upload";
+import { uploadAvatar, uploadCertificado } from "../../config/upload";
 import { ensureUserHasNoCertificate } from "./Middlewares/ensureUserHasNoCertificate";
 
 const router = Router();

@@ -46,6 +46,11 @@
       "lat": -20.3297037,
       "lng": -40.2920174,
       "source": "nominatim"
+    },
+    "Vitoria": {
+      "lat": -20.3200917,
+      "lng": -40.3376682,
+      "source": "nominatim"
     }
   },
   "al": {

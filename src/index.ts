@@ -3,8 +3,9 @@ import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import morgan from "morgan";
 import { errors as celebrateErrors, isCelebrateError } from "celebrate";
-import usersRouter from "./Users/routes";
-import instrutoresRouter from "./routes/instrutores";
+import usersRouter from "./models/users/routes";
+import instrutoresRouter from "./models/instructors/routes";
+import ratingsRouter from "./models/ratings/routes";
 import { AppError } from "./utils/AppError";
 import { ValidationError } from "./utils/ValidationError";
 import { rateLimiterMiddleware } from "./rateLimiter";
@@ -15,10 +16,7 @@ import { prisma } from "./lib/prisma";
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-
-
 app.use("/uploads", express.static(uploadDir));
-
 
 app.use(
   cors({
@@ -30,8 +28,9 @@ app.use(express.json());
 app.use(rateLimiterMiddleware);
 app.use(morgan("dev"));
 
-app.use("/usuarios", usersRouter);
-app.use("/instrutores", instrutoresRouter);
+app.use("/users", usersRouter);
+app.use("/instructors", instrutoresRouter);
+app.use("/ratings", ratingsRouter);
 
 app.get("/", (_, res) => {
   res.send("Servidor rodando!");

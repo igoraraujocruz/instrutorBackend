@@ -1,6 +1,7 @@
-import { prisma } from "../lib/prisma";
-import { slugify } from '../utils/slugify'
-import { CreateProps, UserUpdate, Usuario } from "./interfaces";
+import { Usuario } from "@prisma/client";
+import { prisma } from "../../lib/prisma";
+import { slugify } from '../../utils/slugify'
+import { CreateProps, User, UserUpdate } from "./interfaces";
 import { GeoService } from "./Services/GeoService";
 
 
@@ -47,6 +48,7 @@ export class UserRepository {
 
 
 async update(user: UserUpdate): Promise<Usuario | null> {
+
   const {
     userId,
     nome,
@@ -127,22 +129,55 @@ async update(user: UserUpdate): Promise<Usuario | null> {
             }
           : undefined,
     },
-    include: { instrutor: true },
+    include: {
+    instrutor: {
+      include: {
+        avaliacoes: {
+          select: {
+            id: true,
+            nota: true, 
+          },
+      }
+      },
+    },
+  },
   });
 
   return userUpdated;
 }
 
 
-    async findById(userId: string): Promise<Usuario | null> {
-        const user = await prisma.usuario.findUnique({
-            where: { id: userId },
-            include: {
-              instrutor: true
-            }
-          });
-        return user;
-    }
+    async findById(userId: string) {
+  return prisma.usuario.findUnique({
+    where: { id: userId },
+    include: {
+      instrutor: {
+        select: {
+          id: true,
+          estado: true,
+          cidade: true,
+          cidadeSlug: true,
+          classe: true,
+          descricao: true,
+          preco: true,
+          latitude: true,
+          longitude: true,
+          slug: true,
+          certificado: true,
+          certificadoCodigo:true,
+
+          avaliacoes: {
+            select: {
+              id: true,
+              nota: true,
+            },
+          },
+        },
+      },
+    },
+  });
+}
+
 
     async findByProvider(provider: string, providerId: string): Promise<Usuario | null> {
 

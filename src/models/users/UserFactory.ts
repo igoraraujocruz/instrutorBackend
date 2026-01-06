@@ -5,15 +5,17 @@ import { Auth } from "./Services/Auth";
 import { UpdateUser } from "./Services/Update";
 import { FindById } from "./Services/FindById";
 import { UpdateAvatar } from "./Services/UpdateAvatar";
-import { StorageProvider } from "../providers/StorageProvider";
+import { StorageProvider } from "../../providers/StorageProvider";
 import { UploadCertificate } from "./Services/UploadCertificate";
+import { RatingRepository } from "../ratings/RatingRepository";
 
 const userRepository = new UserRepository();
+const ratingRepository = new RatingRepository();
 
 const uploadCertificate = new UploadCertificate()
 const createUser = new Create(userRepository);
 const authService = new Auth(createUser);
-const updateUser = new UpdateUser(userRepository, uploadCertificate);
+const updateUser = new UpdateUser(userRepository, uploadCertificate, ratingRepository);
 const findUserById = new FindById(userRepository);
 const storageProvider = new StorageProvider();
 const updateAvatar = new UpdateAvatar(userRepository, storageProvider)

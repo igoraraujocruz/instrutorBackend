@@ -1,6 +1,6 @@
 import { PDFParse } from "pdf-parse";
-import { AppError } from "../../utils/AppError";
-import { StorageProvider } from "../../providers/StorageProvider";
+import { AppError } from "../../../utils/AppError";
+import { StorageProvider } from "../../../providers/StorageProvider";
 
 interface ExpectedData {
   nome?: string;
