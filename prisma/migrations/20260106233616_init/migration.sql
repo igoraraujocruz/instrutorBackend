@@ -34,11 +34,13 @@ CREATE TABLE "Instrutor" (
 -- CreateTable
 CREATE TABLE "Avaliacao" (
     "id" TEXT NOT NULL,
-    "aluno" TEXT NOT NULL,
     "nota" INTEGER NOT NULL,
-    "comentario" TEXT NOT NULL,
-    "data" TIMESTAMP(3) NOT NULL,
+    "comentario" TEXT,
+    "usuarioId" TEXT NOT NULL,
     "instrutorId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "deletedAt" TIMESTAMP(3),
 
     CONSTRAINT "Avaliacao_pkey" PRIMARY KEY ("id")
 );
@@ -61,8 +63,17 @@ CREATE UNIQUE INDEX "Instrutor_slug_key" ON "Instrutor"("slug");
 -- CreateIndex
 CREATE UNIQUE INDEX "Instrutor_usuarioId_key" ON "Instrutor"("usuarioId");
 
+-- CreateIndex
+CREATE INDEX "Avaliacao_deletedAt_idx" ON "Avaliacao"("deletedAt");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Avaliacao_usuarioId_instrutorId_deletedAt_key" ON "Avaliacao"("usuarioId", "instrutorId", "deletedAt");
+
 -- AddForeignKey
 ALTER TABLE "Instrutor" ADD CONSTRAINT "Instrutor_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Avaliacao" ADD CONSTRAINT "Avaliacao_instrutorId_fkey" FOREIGN KEY ("instrutorId") REFERENCES "Instrutor"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Avaliacao" ADD CONSTRAINT "Avaliacao_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Avaliacao" ADD CONSTRAINT "Avaliacao_instrutorId_fkey" FOREIGN KEY ("instrutorId") REFERENCES "Instrutor"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

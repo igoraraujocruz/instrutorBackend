@@ -42,3 +42,5 @@ dist
 
 src/utils/cidades.json
 /src/generated/prisma
+
+/src/generated/prisma
