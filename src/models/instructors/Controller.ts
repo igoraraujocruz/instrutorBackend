@@ -29,17 +29,7 @@ export class Controller {
       limit,
     });
 
-    const formattedInstructors = {
-  ...instructors,
-  data: instructors.data.map((instrutor: any) => ({
-    ...instrutor,
-    foto: instrutor.foto
-      ? `${process.env.API_URL}/uploads/avatars/${instrutor.foto}`
-      : null,
-  })),
-};
-
-    return res.json(formattedInstructors);
+    return res.json(instructors);
   }
 
   async findBySlug(req: Request, res: Response) {
@@ -47,11 +37,6 @@ export class Controller {
     const slug = req.params.slug.toLowerCase();
     const instructor = await this.findInstructorBySlug.execute(slug, userId)
 
-    const instructorFormated = {
-      ...instructor,
-      foto: `${process.env.API_URL}/uploads/avatars/${instructor?.foto}`
-    }
-
-    return res.json(instructorFormated);
+    return res.json(instructor);
   }
 }
