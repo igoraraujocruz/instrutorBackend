@@ -212,15 +212,14 @@ async update(user: UserUpdate): Promise<Usuario | null> {
   }
 
 async updateAvatar(userId: string, foto: string): Promise<Usuario> {
-  const user = await prisma.usuario.update({
+  return prisma.usuario.update({
     where: { id: userId },
     data: { foto },
     include: {
       instrutor: true,
     },
   });
-
-  return user;
 }
+
 
 }

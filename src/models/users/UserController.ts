@@ -27,16 +27,11 @@ export class UserController {
 
   async get(req: Request, res: Response) {
     const usuario = await this.userFind.execute(req.userId!);
-
-    const user = {
-      ...usuario,
-      foto: `${process.env.API_URL}/uploads/avatars/${usuario.foto}`
-    }
-
-    return res.json(user);
+    return res.json(usuario);
   }
 
   async update(req: Request, res: Response) {
+    
     const data = {
     userId: req.userId,
     ...req.body,
@@ -49,6 +44,7 @@ export class UserController {
   }
 
    async updateAvatar(req: Request, res: Response) {
+    
     const user = await this.userUpdateAvatar.execute({
       userId: req.userId!,
       file: req.file,

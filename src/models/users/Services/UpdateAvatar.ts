@@ -15,31 +15,34 @@ export class UpdateAvatar {
   ) {}
 
   async execute({ userId, file }: UpdateAvatarInput): Promise<Usuario> {
-    if (!file) {
-      throw new AppError("Arquivo de imagem não enviado");
-    }
-
-    const user = await this.userRepository.findById(userId);
-
-    if (!user) {
-      throw new AppError("Usuário não encontrado", 404);
-    }
-
-    // 🔥 Remove avatar antigo
-    if (user.foto) {
-      await this.storageProvider.delete(`avatars/${user.foto}`);
-    }
-
-    const { foto } = await this.userRepository.updateAvatar(userId, file.filename);
-
-          const fotoUpdated =
-      process.env.NODE_ENV === "production"
-        ? (file as any).location
-        : `${process.env.API_URL}/uploads/avatars/${foto}`;
-
-        return {
-          ...user,
-          foto: fotoUpdated
-        }
+  if (!file) {
+    throw new AppError("Arquivo de imagem não enviado");
   }
+
+  const user = await this.userRepository.findById(userId);
+
+  if (!user) {
+    throw new AppError("Usuário não encontrado", 404);
+  }
+
+  // 🔥 Remove avatar antigo
+  if (user.foto) {
+    await this.storageProvider.delete(user.foto);
+  }
+
+  // 🔥 URL FINAL DA FOTO
+  const fotoUrl =
+    process.env.NODE_ENV === "production"
+      ? (file as any).location
+      : `${process.env.API_URL}/uploads/avatars/${file.filename}`;
+
+  // 🔥 Salva URL COMPLETA no banco
+  const updatedUser = await this.userRepository.updateAvatar(
+    userId,
+    fotoUrl
+  );
+
+  return updatedUser;
+}
+
 }
