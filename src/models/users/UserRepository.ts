@@ -211,9 +211,8 @@ async update(user: UserUpdate): Promise<Usuario | null> {
     return user;
   }
 
-async updateAvatar(userId: string, foto: string) {
-  try {
-    const user = await prisma.usuario.update({
+async updateAvatar(userId: string, foto: string): Promise<Usuario> {
+  const user = await prisma.usuario.update({
     where: { id: userId },
     data: { foto },
     include: {
@@ -222,9 +221,6 @@ async updateAvatar(userId: string, foto: string) {
   });
 
   return user;
-  } catch(err) {
-    console.log(err)
-  }
 }
 
 }

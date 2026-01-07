@@ -28,7 +28,12 @@ export class UserController {
   async get(req: Request, res: Response) {
     const usuario = await this.userFind.execute(req.userId!);
 
-    return res.json(usuario);
+    const user = {
+      ...usuario,
+      foto: `${process.env.API_URL}/uploads/avatars/${usuario.foto}`
+    }
+
+    return res.json(user);
   }
 
   async update(req: Request, res: Response) {
